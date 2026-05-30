@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vida de Fe</title>
+  <meta name="description" content="Palabra de Vida — Reflexiones y versículos diarios para alimentar la fe católica." />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@300;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2C3E50">
+  <link rel="icon" href="images/videa de fe.png" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <img src="images/Videa de Fe.png" alt="Palabra de Vida - logo" class="logo-img" />
+        <h1 class="site-title">Vida de Fe</h1>
+      </div>
+      <nav class="main-nav">
+        <a href="#palabra">Palabra</a>
+        <a href="#salmo">Salmo</a>
+        <a href="#papas">Papas</a>
+        <a href="#fe">Fe</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- PALABRA DEL DÍA -->
+    <section id="palabra" class="hero">
+      <div class="hero-content">
+        <h2 class="hero-titulo">Palabra del Día</h2>
+        <p class="hero-sub">Pulsa el botón y recibe la palabra que Dios tiene para ti hoy.</p>
+
+        <div class="cta-row">
+          <button id="botonVersiculo" class="boton-cta">Obtener Palabra</button>
+        </div>
+
+        <div id="versiculoAleatorio" class="card-versiculo">
+          <h3 class="placeholder">Pulsa "Obtener Palabra" para recibir una palabra de vida.</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- SALMO DEL DÍA -->
+    <section id="salmo" class="salmo hero">
+      <div class="hero-content">
+        <h2 class="hero-titulo">Salmo del Día</h2>
+        <p class="hero-sub">Que este salmo te inspire y fortalezca tu fe.</p>
+
+        <div class="cta-row">
+          <button id="botonSalmo" class="boton-cta">Obtener Salmo</button>
+        </div>
+
+        <div id="salmoAleatorio" class="card-versiculo">
+          <h3 class="placeholder">Pulsa "Obtener Salmo" para recibir un salmo de vida.</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAPAS -->
+    <section id="papas" class="papas">
+      <h2>Los últimos cinco Papas de la Iglesia</h2>
+      <div class="contenedor-imagenes-papa">
+        <figure class="papa-figure"><img src="images/JP1.jpg" alt="Juan Pablo I"><figcaption>Juan Pablo I</figcaption></figure>
+        <figure class="papa-figure"><img src="images/JP2.jpg" alt="Juan Pablo II"><figcaption>Juan Pablo II</figcaption></figure>
+        <figure class="papa-figure"><img src="images/B16.jpg" alt="Benedicto XVI"><figcaption>Benedicto XVI</figcaption></figure>
+        <figure class="papa-figure"><img src="images/francisco.jpg" alt="Francisco"><figcaption>Francisco</figcaption></figure>
+        <figure class="papa-figure"><img src="images/leonvi.jpg" alt="León VI"><figcaption>León VI</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- FE -->
+    <section id="fe" class="fe">
+      <h2>La Fe</h2>
+      <p>La fe es la confianza plena en Dios, en sus promesas y en su amor incondicional.</p>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="contacto">
+      <h2>Contacto</h2>
+      <p>Si deseas colaborar, sugerir contenido o enviar un testimonio, escribe a: 
+        <a href="mailto:tombc07@gmail.com">tombc07@gmail.com</a></p>
+    </section>
+  </main>
+
+  <footer class="creditos">
+    <p>Dios te ama</p>
+    <p>Desarrollado por un joven católico con ganas de evangelizar y predicar.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const versiculos = [
+      "Clama a mí, y yo te responderé. — Jeremías 33,3",
+     "Confía en el Señor y haz el bien. — Salmo 37,3",
+     "No se turbe vuestro corazón, ni tenga miedo. — Juan 14,27",
+     "Sean fuertes y valientes; no teman ni se asusten. — Josué 1,9",
+     "Yo soy el camino, la verdad y la vida. — Juan 14,6",
+     "La paz os dejo, mi paz os doy. — Juan 14,27",
+     "El justo por la fe vivirá. — Romanos 1,17",
+     "Alegraos en la esperanza, sed pacientes en la tribulación. — Romanos 12,12",
+     "Todo tiene su tiempo. — Eclesiastés 3,1",
+     "El amor nunca deja de ser. — 1 Corintios 13,8",
+     "El Señor peleará por vosotros. — Éxodo 14,14",
+     "No te desampararé ni te dejaré. — Hebreos 13,5",
+     "Yo estaré contigo todos los días, hasta el fin del mundo. — Mateo 28,20",
+     "Guarda silencio ante Jehová, y espera en él. — Salmo 37,7",
+     "Dame entendimiento para guardar tu ley. — Salmo 119,34",
+     "Esforzaos y cobrad ánimo. — Salmo 31,24",
+     "La lámpara del cuerpo es el ojo. — Mateo 6,22",
+     "Los que buscan al Señor no tendrán falta de ningún bien. — Salmo 34,10",
+     "Jehová es mi pastor; nada me faltará. — Salmo 23,1",
+     "Mi poder se perfecciona en la debilidad. — 2 Corintios 12,9",
+     "En Dios solamente está acallada mi alma. — Salmo 62,1",
+     "Bienaventurado el hombre que confía en Jehová. — Jeremías 17,7",
+     "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. — Salmo 91,1",
+     "Encomienda a Jehová tu camino, y confía en él. — Salmo 37,5",
+     "El que habita en el amor, habita en Dios. — 1 Juan 4,16",
+     "Dios no es hombre para que mienta. — Números 23,19",
+     "El que comenzó en vosotros la buena obra, la perfeccionará. — Filipenses 1,6",
+     "Mi ayuda viene de Jehová. — Salmo 121,2",
+     "El corazón alegre hermosea el rostro. — Proverbios 15,13",
+     "El que guarda su boca guarda su alma. — Proverbios 13,3"
+
+    ];
+
+    const salmos = [
+      "El Señor es mi roca, mi fortaleza y mi libertador. — Salmo 18,2",
+      "Encomienda a Jehová tu camino, y confía en Él. — Salmo 37,5",
+      "El Señor peleará por vosotros. — Éxodo 14,14",
+      "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. — Salmo 91,1",
+      "Cantad al Señor, porque ha hecho maravillas. — Isaías 12,5",
+      "El Señor sostiene a todos los que caen. — Salmo 145,14",
+      "Bendice, alma mía, al Señor. — Salmo 103,1"
+    ];
+
+    const botonVersiculo = document.getElementById("botonVersiculo");
+    const contenedorVersiculo = document.getElementById("versiculoAleatorio");
+    botonVersiculo.addEventListener("click", () => {
+      const aleatorio = Math.floor(Math.random() * versiculos.length);
+      contenedorVersiculo.innerHTML = `<h3 class="versiculo-texto">${versiculos[aleatorio]}</h3>`;
+      contenedorVersiculo.classList.add("show");
+      setTimeout(() => contenedorVersiculo.classList.remove("show"), 800);
+    });
+
+    const botonSalmo = document.getElementById("botonSalmo");
+    const contenedorSalmo = document.getElementById("salmoAleatorio");
+    botonSalmo.addEventListener("click", () => {
+      const aleatorio = Math.floor(Math.random() * salmos.length);
+      contenedorSalmo.innerHTML = `<h3 class="versiculo-texto">${salmos[aleatorio]}</h3>`;
+      contenedorSalmo.classList.add("show");
+      setTimeout(() => contenedorSalmo.classList.remove("show"), 800);
+    });
+  </script>
+</body>
+</html>
