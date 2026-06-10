@@ -7,6 +7,7 @@
     --bg: #EDE6DB;      /* fondo marfil claro */
     --marfil: #fff8f0;
     --dorado: #c9a227;  /* acentos dorados */
+      --header-height: 84px;
     --vino: #6B2737;    /* acento fuerte */
     --azul: #2C3E50;    /* texto principal */
     --texto: #2b2b2b;
@@ -23,7 +24,7 @@
     color: var(--texto);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding-top: 84px; /* espacio para header fijo */
+      padding-top: var(--header-height); /* espacio para header fijo */
   }
   .skip-link {
     position: absolute;
@@ -69,12 +70,14 @@
     align-items: center;
     justify-content: space-between;
     padding: 14px 20px;
+    position: relative;
   }
   
   .logo {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex: 0 0 auto;
   }
   
   .logo-img{
@@ -91,17 +94,64 @@
     color: var(--azul);
     font-size: 20px;
     margin: 0;
+    margin-right: 32px; /* espacio extra entre nombre y menú */
   }
+  .nav-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1 1 auto;
+    margin-left: 8px; /* mantén el logo junto al nombre; separa sólo título y menú */
+  }
+
+  /* mobile toggle button */
+  .nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.06);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .nav-toggle .hamburger {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--azul);
+    position: relative;
+  }
+  .nav-toggle .hamburger::before,
+  .nav-toggle .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 2px;
+    background: var(--azul);
+  }
+  .nav-toggle .hamburger::before { top: -6px; }
+  .nav-toggle .hamburger::after { top: 6px; }
   
   /* Nav */
+  .main-nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
   .main-nav a {
     color: var(--azul);
     text-decoration: none;
-    margin-left: 18px;
+    margin: 0;
     font-weight: 600;
     font-size: 15px;
+    white-space: nowrap;
   }
   .main-nav a:hover { color: var(--vino); text-decoration: underline; }
+     .main-nav a:focus { outline: 3px solid rgba(44,62,80,0.12); outline-offset: 4px; border-radius: 6px; }
   
   /* --- HERO / Palabra del día --- */
   .hero {
@@ -129,6 +179,7 @@
     font-size: 18px;
     margin: 0 0 18px;
   }
+  .hero-lead { margin-top: 8px; color: var(--texto); font-size: 18px; }
   
   /* CTA row */
   .cta-row {
@@ -152,6 +203,13 @@
     transition: transform .15s ease, box-shadow .15s ease;
   }
   .boton-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(201,162,39,0.2); }
+  .boton-secundario {
+    background: transparent;
+    color: var(--azul);
+    border: 1px solid rgba(44,62,80,0.06);
+    box-shadow: none;
+  }
+  .header-cta { display: inline-block; margin-left: auto; }
   
   .boton-audio {
     background: transparent;
@@ -342,16 +400,19 @@
 .salmo,
 .papas {
   min-height: 100vh;        /* cada sección ocupa toda la pantalla */
+  min-height: auto;
+  padding: 60px 20px;
+section {
+.hero {
+  min-height: 100vh;        /* hero ocupa la pantalla completa */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 60px 20px;
   box-sizing: border-box;
   scroll-snap-align: start;
-}
-section {
   scroll-margin-top: 100px;
+  .boton-cta:focus { outline: 3px solid rgba(201,162,39,0.18); outline-offset: 4px; }
 }
 
 main {
@@ -428,4 +489,14 @@ main {
       max-width: 220px;
     }
   }
+
+/* Mobile nav behavior */
+@media (max-width: 880px) {
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .main-nav { display: none; position: absolute; right: 20px; top: calc(var(--header-height) + 10px); background: var(--marfil); border-radius: 10px; padding: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); z-index: 2100; }
+  .main-nav.open { display: flex; flex-direction: column; gap: 8px; }
+  .main-nav a { margin-left: 0; padding: 8px 12px; }
+  .header-cta { display: none; }
+  .header-inner { padding: 12px 16px; }
+}
   

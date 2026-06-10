@@ -7,38 +7,59 @@
   <meta name="description" content="Palabra de Vida — Reflexiones y versículos diarios para alimentar la fe católica." />
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@300;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Open+Sans:wght@300;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2C3E50">
-  <link rel="icon" href="images/videa de fe.png" />
+  <link rel="icon" href="images/vida-de-fe.png" />
+  <meta property="og:title" content="Vida de Fe" />
+  <meta property="og:description" content="Reflexiones y versículos diarios para alimentar la fe." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/vida-de-fe.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Vida de Fe",
+    "url": "/",
+    "logo": "images/vida-de-fe.png"
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">
-        <img src="images/Videa de Fe.png" alt="Palabra de Vida - logo" class="logo-img" />
+        <img src="images/vida-de-fe.png" alt="Palabra de Vida - logo" class="logo-img" />
         <h1 class="site-title">Vida de Fe</h1>
       </div>
-      <nav class="main-nav">
-        <a href="#palabra">Palabra</a>
-        <a href="#salmo">Salmo</a>
-        <a href="#papas">Papas</a>
-        <a href="#fe">Fe</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
+      <div class="nav-wrap">
+        <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
+          <span class="hamburger" aria-hidden="true"></span>
+        </button>
+        <nav id="main-nav" class="main-nav" aria-label="Navegación principal">
+          <a href="#palabra">Palabra</a>
+          <a href="#salmo">Salmo</a>
+          <a href="#papas">Papas</a>
+          <a href="#fe">Fe</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <a href="#palabra" class="boton-cta header-cta">Recibir palabra</a>
+      </div>
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- PALABRA DEL DÍA -->
     <section id="palabra" class="hero">
       <div class="hero-content">
         <h2 class="hero-titulo">Palabra del Día</h2>
-        <p class="hero-sub">Pulsa el botón y recibe la palabra que Dios tiene para ti hoy.</p>
+        <p class="hero-sub">Reflexiones diarias y versículos para acompañar tu camino de fe.</p>
+        <p class="hero-lead">Recibe cada día una palabra que te anime, consuele y guíe.</p>
 
         <div class="cta-row">
-          <button id="botonVersiculo" class="boton-cta">Obtener Palabra</button>
+          <button id="botonVersiculo" class="boton-cta">Recibir palabra</button>
         </div>
 
         <div id="versiculoAleatorio" class="card-versiculo">
@@ -67,11 +88,11 @@
     <section id="papas" class="papas">
       <h2>Los últimos cinco Papas de la Iglesia</h2>
       <div class="contenedor-imagenes-papa">
-        <figure class="papa-figure"><img src="images/JP1.jpg" alt="Juan Pablo I"><figcaption>Juan Pablo I</figcaption></figure>
-        <figure class="papa-figure"><img src="images/JP2.jpg" alt="Juan Pablo II"><figcaption>Juan Pablo II</figcaption></figure>
-        <figure class="papa-figure"><img src="images/B16.jpg" alt="Benedicto XVI"><figcaption>Benedicto XVI</figcaption></figure>
-        <figure class="papa-figure"><img src="images/francisco.jpg" alt="Francisco"><figcaption>Francisco</figcaption></figure>
-        <figure class="papa-figure"><img src="images/leonvi.jpg" alt="León VI"><figcaption>León VI</figcaption></figure>
+        <figure class="papa-figure"><img src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy"><figcaption>Juan Pablo I</figcaption></figure>
+        <figure class="papa-figure"><img src="images/JP2.jpg" alt="Juan Pablo II" loading="lazy"><figcaption>Juan Pablo II</figcaption></figure>
+        <figure class="papa-figure"><img src="images/B16.jpg" alt="Benedicto XVI" loading="lazy"><figcaption>Benedicto XVI</figcaption></figure>
+        <figure class="papa-figure"><img src="images/francisco.jpg" alt="Francisco" loading="lazy"><figcaption>Francisco</figcaption></figure>
+        <figure class="papa-figure"><img src="images/leonvi.jpg" alt="León VI" loading="lazy"><figcaption>León VI</figcaption></figure>
       </div>
     </section>
 
@@ -95,6 +116,18 @@
   </footer>
 
   <!-- SCRIPT -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if(toggle && nav){
+      toggle.addEventListener('click', function(){
+        const isOpen = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+  });
+  </script>
   <script>
     const versiculos = [
       "Clama a mí, y yo te responderé. — Jeremías 33,3",
