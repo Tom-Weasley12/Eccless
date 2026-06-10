@@ -532,4 +532,33 @@ main {
 @media (max-width: 480px) {
   .bio-popover { left: 50%; width: calc(100% - 40px); transform: translateX(-50%); }
 }
-  
+
+.bio-popover .leer-mas {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(180deg, var(--dorado), #b78f1a);
+  box-shadow: 0 6px 16px rgba(201,162,39,0.14);
+  border: none;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.bio-popover .leer-mas:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(201,162,39,0.18); }
+.bio-popover .bio-full {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--texto);
+} 
+
+/* Ajustes específicos para usar la clase global .boton-cta dentro del popover */
+.bio-popover .boton-cta {
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(201,162,39,0.14);
+}
+.bio-popover .boton-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(201,162,39,0.18); }

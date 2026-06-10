@@ -89,27 +89,27 @@
       <h2>Los últimos cinco Papas de la Iglesia</h2>
       <div class="contenedor-imagenes-papa">
         <figure class="papa-figure">
-          <img class="pope-photo" src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy" data-bio="Albino Luciani (Juan Pablo I) fue papa brevemente en 1978; conocido por su humildad y cercanía pastoral.">
+          <img class="pope-photo" src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy" data-id="jp1">
           <figcaption>Juan Pablo I</figcaption>
         </figure>
 
         <figure class="papa-figure">
-          <img class="pope-photo" src="images/JP2.jpg" alt="San Juan Pablo II" loading="lazy" data-bio="Karol Wojtyła (Juan Pablo II) fue papa de 1978 a 2005; promovió el diálogo interreligioso y peregrinaciones por el mundo.">
+          <img class="pope-photo" src="images/JP2.jpg" alt="San Juan Pablo II" loading="lazy" data-id="jp2">
           <figcaption>Juan Pablo II</figcaption>
         </figure>
 
         <figure class="papa-figure">
-          <img class="pope-photo" src="images/B16.jpg" alt="Benedicto XVI" loading="lazy" data-bio="Joseph Ratzinger (Benedicto XVI) fue papa de 2005 a 2013; teólogo y prefecto de la Congregación para la Doctrina de la Fe.">
+          <img class="pope-photo" src="images/B16.jpg" alt="Benedicto XVI" loading="lazy" data-id="b16">
           <figcaption>Benedicto XVI</figcaption>
         </figure>
 
         <figure class="papa-figure">
-          <img class="pope-photo" src="images/francisco.jpg" alt="Francisco" loading="lazy" data-bio="Jorge Mario Bergoglio (Francisco) es el papa actual desde 2013; conocido por su enfoque en la misericordia y la sencillez.">
+          <img class="pope-photo" src="images/francisco.jpg" alt="Francisco" loading="lazy" data-id="francisco">
           <figcaption>Francisco</figcaption>
         </figure>
 
         <figure class="papa-figure">
-          <img class="pope-photo" src="images/leonvi.jpg" alt="León XIV" loading="lazy" data-bio="León XIV (figura histórica mencionada) — en esta web se usa como referencia a papas históricos; sustituya según convenga.">
+          <img class="pope-photo" src="images/leonvi.jpg" alt="León XIV" loading="lazy" data-id="leonvi">
           <figcaption>León XIV</figcaption>
         </figure>
       </div>
@@ -214,43 +214,59 @@
   </script>
   <script>
   (function(){
-    // Cierra cualquier popover abierto
+    let papasData = {};
+
     function closeAllPopovers(){
       document.querySelectorAll('.bio-popover').forEach(p => p.remove());
     }
 
-    document.addEventListener('click', function(e){
-      const img = e.target.closest('.pope-photo');
-      // clic en una imagen: toggle popover dentro de la figura
-      if(img){
-        const figure = img.closest('.papa-figure');
-        const existing = figure.querySelector('.bio-popover');
-        if(existing){ existing.remove(); return; }
-        // cerrar otros
-        closeAllPopovers();
-        const bio = img.dataset.bio || '';
-        const title = img.alt || figure.querySelector('figcaption')?.textContent || '';
-        const pop = document.createElement('div');
-        pop.className = 'bio-popover';
-        pop.innerHTML = `
-          <button class="bio-close" aria-label="Cerrar">×</button>
-          <h4 class="bio-title">${title}</h4>
-          <p class="bio-text">${bio}</p>
-        `;
-        figure.appendChild(pop);
-        // focus y events
-        pop.querySelector('.bio-close').addEventListener('click', () => pop.remove());
-        // evita que el clic dentro del popover cierre todo
-        pop.addEventListener('click', (ev) => ev.stopPropagation());
-        return;
-      }
+    function initPopovers(){
+      document.addEventListener('click', function(e){
+        const img = e.target.closest('.pope-photo');
+        if(img){
+          const figure = img.closest('.papa-figure');
+          const existing = figure.querySelector('.bio-popover');
+          if(existing){ existing.remove(); return; }
+          closeAllPopovers();
+          const id = img.dataset.id;
+          const entry = papasData[id] || { name: img.alt, short: img.dataset.bio || '', full: '' };
+          const pop = document.createElement('div');
+            pop.className = 'bio-popover';
+            pop.innerHTML = `
+              <button class="bio-close" aria-label="Cerrar">×</button>
+              <h4 class="bio-title">${entry.name}</h4>
+              <p class="bio-text">${entry.short}</p>
+              ${entry.full ? '<button class="boton-cta leer-mas">Leer más</button><div class="bio-full" style="display:none;">' + entry.full + '</div>' : ''}
+            `;
+          figure.appendChild(pop);
+          pop.querySelector('.bio-close').addEventListener('click', () => pop.remove());
+          const leer = pop.querySelector('.leer-mas');
+          if(leer){
+            leer.addEventListener('click', (ev) => {
+              ev.stopPropagation();
+              const full = pop.querySelector('.bio-full');
+              if(full.style.display === 'none'){ full.style.display = 'block'; leer.textContent = 'Mostrar menos'; }
+              else { full.style.display = 'none'; leer.textContent = 'Leer más'; }
+            });
+          }
+          pop.addEventListener('click', (ev) => ev.stopPropagation());
+          return;
+        }
+        if(!e.target.closest('.bio-popover')) closeAllPopovers();
+      });
 
-      // clic fuera de una imagen/popover: cerrar popovers
-      if(!e.target.closest('.bio-popover')) closeAllPopovers();
+      document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAllPopovers(); });
+    }
+
+    // Cargar biografías desde JSON primero, luego inicializar listeners
+    fetch('papas.json').then(r => r.json()).then(list => {
+      list.forEach(p => papasData[p.id] = p);
+    }).catch(() => {
+      papasData = {};
+    }).finally(() => {
+      initPopovers();
     });
 
-    // cerrar con Escape
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAllPopovers(); });
   })();
   </script>
 </body>

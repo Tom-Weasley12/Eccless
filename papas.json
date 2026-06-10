@@ -1,0 +1,32 @@
+[
+  {
+    "id": "jp1",
+    "name": "Juan Pablo I",
+    "short": "Albino Luciani (Juan Pablo I) fue papa brevemente en 1978; conocido por su humildad.",
+    "full": "Albino Luciani, elegido papa en agosto de 1978 con el nombre de Juan Pablo I, destacó por su cercanía pastoral, sencillez y sentido del humor. Su pontificado fue muy breve (33 días), pero dejó recuerdo de una gran humanidad y devoción al pueblo."
+  },
+  {
+    "id": "jp2",
+    "name": "San Juan Pablo II",
+    "short": "Karol Wojtyła (Juan Pablo II) fue papa de 1978 a 2005; promovió el diálogo y las peregrinaciones.",
+    "full": "Karol Wojtyła, papa Juan Pablo II, sirvió desde 1978 hasta 2005. Fue una figura central del siglo XX: viajó por todo el mundo, promovió el encuentro entre culturas y confesiones, defendió la dignidad humana y tuvo un papel relevante en la caída del comunismo en Europa del Este. Canonizado en 2014."
+  },
+  {
+    "id": "b16",
+    "name": "Benedicto XVI",
+    "short": "Joseph Ratzinger (Benedicto XVI) fue papa de 2005 a 2013; teólogo y líder en doctrina.",
+    "full": "Joseph Ratzinger, papa Benedicto XVI, fue teólogo y prefecto de la Congregación para la Doctrina de la Fe antes de su elección en 2005. Su pontificado enfatizó la enseñanza y la liturgia; en 2013 sorprendió al mundo con su renuncia, la primera en siglos."
+  },
+  {
+    "id": "francisco",
+    "name": "Francisco",
+    "short": "Jorge Mario Bergoglio (Francisco) es papa desde 2013; conocido por la sencillez y la misericordia.",
+    "full": "Jorge Mario Bergoglio, papa Francisco, elegido en 2013, ha impulsado un estilo pastoral marcado por la cercanía, la atención a los pobres y la llamada a una Iglesia en salida. Ha promovido la reforma de estructuras y el cuidado de la creación."
+  },
+  {
+    "id": "leonvi",
+    "name": "León XIV",
+    "short": "León XIV (figura histórica) — descripción de ejemplo; sustituir según convenga.",
+    "full": "León XIV es una referencia histórica incluida como ejemplo en esta web. Si deseas, podemos corregir el nombre y la imagen por otro papa histórico con su biografía completa."
+  }
+]
