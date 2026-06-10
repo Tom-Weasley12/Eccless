@@ -88,11 +88,30 @@
     <section id="papas" class="papas">
       <h2>Los últimos cinco Papas de la Iglesia</h2>
       <div class="contenedor-imagenes-papa">
-        <figure class="papa-figure"><img src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy"><figcaption>Juan Pablo I</figcaption></figure>
-        <figure class="papa-figure"><img src="images/JP2.jpg" alt="Juan Pablo II" loading="lazy"><figcaption>Juan Pablo II</figcaption></figure>
-        <figure class="papa-figure"><img src="images/B16.jpg" alt="Benedicto XVI" loading="lazy"><figcaption>Benedicto XVI</figcaption></figure>
-        <figure class="papa-figure"><img src="images/francisco.jpg" alt="Francisco" loading="lazy"><figcaption>Francisco</figcaption></figure>
-        <figure class="papa-figure"><img src="images/leonvi.jpg" alt="León VI" loading="lazy"><figcaption>León VI</figcaption></figure>
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy" data-bio="Albino Luciani (Juan Pablo I) fue papa brevemente en 1978; conocido por su humildad y cercanía pastoral.">
+          <figcaption>Juan Pablo I</figcaption>
+        </figure>
+
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/JP2.jpg" alt="San Juan Pablo II" loading="lazy" data-bio="Karol Wojtyła (Juan Pablo II) fue papa de 1978 a 2005; promovió el diálogo interreligioso y peregrinaciones por el mundo.">
+          <figcaption>Juan Pablo II</figcaption>
+        </figure>
+
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/B16.jpg" alt="Benedicto XVI" loading="lazy" data-bio="Joseph Ratzinger (Benedicto XVI) fue papa de 2005 a 2013; teólogo y prefecto de la Congregación para la Doctrina de la Fe.">
+          <figcaption>Benedicto XVI</figcaption>
+        </figure>
+
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/francisco.jpg" alt="Francisco" loading="lazy" data-bio="Jorge Mario Bergoglio (Francisco) es el papa actual desde 2013; conocido por su enfoque en la misericordia y la sencillez.">
+          <figcaption>Francisco</figcaption>
+        </figure>
+
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/leonvi.jpg" alt="León XIV" loading="lazy" data-bio="León XIV (figura histórica mencionada) — en esta web se usa como referencia a papas históricos; sustituya según convenga.">
+          <figcaption>León XIV</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -114,6 +133,8 @@
     <p>Dios te ama</p>
     <p>Desarrollado por un joven católico con ganas de evangelizar y predicar.</p>
   </footer>
+
+  <!-- Popover inline: se renderiza dentro de cada figura al clicar -->
 
   <!-- SCRIPT -->
   <script>
@@ -190,6 +211,47 @@
       contenedorSalmo.classList.add("show");
       setTimeout(() => contenedorSalmo.classList.remove("show"), 800);
     });
+  </script>
+  <script>
+  (function(){
+    // Cierra cualquier popover abierto
+    function closeAllPopovers(){
+      document.querySelectorAll('.bio-popover').forEach(p => p.remove());
+    }
+
+    document.addEventListener('click', function(e){
+      const img = e.target.closest('.pope-photo');
+      // clic en una imagen: toggle popover dentro de la figura
+      if(img){
+        const figure = img.closest('.papa-figure');
+        const existing = figure.querySelector('.bio-popover');
+        if(existing){ existing.remove(); return; }
+        // cerrar otros
+        closeAllPopovers();
+        const bio = img.dataset.bio || '';
+        const title = img.alt || figure.querySelector('figcaption')?.textContent || '';
+        const pop = document.createElement('div');
+        pop.className = 'bio-popover';
+        pop.innerHTML = `
+          <button class="bio-close" aria-label="Cerrar">×</button>
+          <h4 class="bio-title">${title}</h4>
+          <p class="bio-text">${bio}</p>
+        `;
+        figure.appendChild(pop);
+        // focus y events
+        pop.querySelector('.bio-close').addEventListener('click', () => pop.remove());
+        // evita que el clic dentro del popover cierre todo
+        pop.addEventListener('click', (ev) => ev.stopPropagation());
+        return;
+      }
+
+      // clic fuera de una imagen/popover: cerrar popovers
+      if(!e.target.closest('.bio-popover')) closeAllPopovers();
+    });
+
+    // cerrar con Escape
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAllPopovers(); });
+  })();
   </script>
 </body>
 </html>
