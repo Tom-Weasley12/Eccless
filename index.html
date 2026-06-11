@@ -40,7 +40,7 @@
         </button>
         <nav id="main-nav" class="main-nav" aria-label="Navegación principal">
           <a href="#palabra">Palabra</a>
-          <a href="#salmo">Salmo</a>
+            <a href="#santos">Santos</a>
           <a href="#papas">Papas</a>
           <a href="#fe">Fe</a>
           <a href="#contacto">Contacto</a>
@@ -68,19 +68,24 @@
       </div>
     </section>
 
-    <!-- SALMO DEL DÍA -->
-    <section id="salmo" class="salmo hero">
-      <div class="hero-content">
-        <h2 class="hero-titulo">Salmo del Día</h2>
-        <p class="hero-sub">Que este salmo te inspire y fortalezca tu fe.</p>
+    <!-- SANTOS -->
+    <section id="santos" class="papas santos">
+      <h2>Santos de la Iglesia Católica</h2>
+      <div class="contenedor-imagenes-papa">
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/Pio.jpg" alt="San Pío" loading="lazy" data-id="pio">
+          <figcaption>San Pío</figcaption>
+        </figure>
 
-        <div class="cta-row">
-          <button id="botonSalmo" class="boton-cta">Obtener Salmo</button>
-        </div>
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/carlos.jpg" alt="San Carlos" loading="lazy" data-id="carlos">
+          <figcaption>San Carlos</figcaption>
+        </figure>
 
-        <div id="salmoAleatorio" class="card-versiculo">
-          <h3 class="placeholder">Pulsa "Obtener Salmo" para recibir un salmo de vida.</h3>
-        </div>
+        <figure class="papa-figure">
+          <img class="pope-photo" src="images/asis.jpg" alt="San Francisco de Asís" loading="lazy" data-id="asis">
+          <figcaption>San Francisco de Asís</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -184,15 +189,6 @@
 
     ];
 
-    const salmos = [
-      "El Señor es mi roca, mi fortaleza y mi libertador. — Salmo 18,2",
-      "Encomienda a Jehová tu camino, y confía en Él. — Salmo 37,5",
-      "El Señor peleará por vosotros. — Éxodo 14,14",
-      "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. — Salmo 91,1",
-      "Cantad al Señor, porque ha hecho maravillas. — Isaías 12,5",
-      "El Señor sostiene a todos los que caen. — Salmo 145,14",
-      "Bendice, alma mía, al Señor. — Salmo 103,1"
-    ];
 
     const botonVersiculo = document.getElementById("botonVersiculo");
     const contenedorVersiculo = document.getElementById("versiculoAleatorio");
@@ -203,18 +199,11 @@
       setTimeout(() => contenedorVersiculo.classList.remove("show"), 800);
     });
 
-    const botonSalmo = document.getElementById("botonSalmo");
-    const contenedorSalmo = document.getElementById("salmoAleatorio");
-    botonSalmo.addEventListener("click", () => {
-      const aleatorio = Math.floor(Math.random() * salmos.length);
-      contenedorSalmo.innerHTML = `<h3 class="versiculo-texto">${salmos[aleatorio]}</h3>`;
-      contenedorSalmo.classList.add("show");
-      setTimeout(() => contenedorSalmo.classList.remove("show"), 800);
-    });
+    // Se eliminó la sección de "Salmo" y su lógica asociada.
   </script>
   <script>
   (function(){
-    let papasData = {};
+    let bioData = {};
 
     function closeAllPopovers(){
       document.querySelectorAll('.bio-popover').forEach(p => p.remove());
@@ -229,7 +218,7 @@
           if(existing){ existing.remove(); return; }
           closeAllPopovers();
           const id = img.dataset.id;
-          const entry = papasData[id] || { name: img.alt, short: img.dataset.bio || '', full: '' };
+          const entry = bioData[id] || { name: img.alt, short: img.dataset.bio || '', full: '' };
           const pop = document.createElement('div');
             pop.className = 'bio-popover';
             pop.innerHTML = `
@@ -258,11 +247,15 @@
       document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAllPopovers(); });
     }
 
-    // Cargar biografías desde JSON primero, luego inicializar listeners
-    fetch('papas.json').then(r => r.json()).then(list => {
-      list.forEach(p => papasData[p.id] = p);
+    // Cargar biografías desde papas.json y santos.json, luego inicializar listeners
+    Promise.all([
+      fetch('papas.json').then(r => r.json()).catch(() => []),
+      fetch('santos.json').then(r => r.json()).catch(() => [])
+    ]).then(([papasList, santosList]) => {
+      papasList.forEach(p => bioData[p.id] = p);
+      santosList.forEach(s => bioData[s.id] = s);
     }).catch(() => {
-      papasData = {};
+      bioData = {};
     }).finally(() => {
       initPopovers();
     });
