@@ -3,204 +3,391 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vida de Fe</title>
-  <meta name="description" content="Palabra de Vida — Reflexiones y versículos diarios para alimentar la fe católica." />
+  <title>Vida de Fe — Palabra de Vida</title>
+  <meta name="description" content="Vida de Fe — Reflexiones y versículos diarios para alimentar la fe católica." />
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&family=Open+Sans:wght@300;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="style.css"/>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2C3E50">
   <link rel="icon" href="images/vida-de-fe.png" />
   <meta property="og:title" content="Vida de Fe" />
   <meta property="og:description" content="Reflexiones y versículos diarios para alimentar la fe." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/vida-de-fe.png" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Vida de Fe",
-    "url": "/",
-    "logo": "images/vida-de-fe.png"
-  }
-  </script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Saltar al contenido</a>
-  <header class="site-header">
+
+  <!-- HEADER -->
+  <header class="site-header" data-testid="site-header">
     <div class="header-inner">
-      <div class="logo">
-        <img src="images/vida-de-fe.png" alt="Palabra de Vida - logo" class="logo-img" />
-        <h1 class="site-title">Vida de Fe</h1>
-      </div>
-      <div class="nav-wrap">
-        <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú">
-          <span class="hamburger" aria-hidden="true"></span>
-        </button>
-        <nav id="main-nav" class="main-nav" aria-label="Navegación principal">
-          <a href="#palabra">Palabra</a>
-            <a href="#santos">Santos</a>
-          <a href="#papas">Papas</a>
-          <a href="#fe">Fe</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
-        <a href="#palabra" class="boton-cta header-cta">Recibir palabra</a>
-      </div>
+      <a href="#palabra" class="logo" data-testid="site-logo">
+        <span class="logo-ring">
+          <img src="images/vida-de-fe.png" alt="Vida de Fe" class="logo-img"/>
+        </span>
+        <span class="site-title">Vida de <em>Fe</em></span>
+      </a>
+
+      <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú" data-testid="nav-toggle">
+        <span class="hamburger" aria-hidden="true"></span>
+      </button>
+
+      <nav id="main-nav" class="main-nav" aria-label="Navegación principal" data-testid="main-nav">
+        <a href="#palabra" data-testid="nav-palabra">Palabra</a>
+        <a href="#santos" data-testid="nav-santos">Santos</a>
+        <a href="#papas" data-testid="nav-papas">Papas</a>
+        <a href="#fe" data-testid="nav-fe">Fe</a>
+        <a href="#contacto" data-testid="nav-contacto">Contacto</a>
+        <a href="#palabra" class="boton-cta header-cta" data-testid="header-cta">
+          <i class="fa-solid fa-dove"></i> Recibir palabra
+        </a>
+      </nav>
     </div>
   </header>
 
   <main id="main-content">
-    <!-- PALABRA DEL DÍA -->
-    <section id="palabra" class="hero">
-      <div class="hero-content">
-        <h2 class="hero-titulo">Palabra del Día</h2>
-        <p class="hero-sub">Reflexiones diarias y versículos para acompañar tu camino de fe.</p>
-        <p class="hero-lead">Recibe cada día una palabra que te anime, consuele y guíe.</p>
+
+    <!-- HERO -->
+    <section id="palabra" class="hero" data-testid="hero-section">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-gradient"></div>
+        <div class="hero-rays"></div>
+        <div class="hero-stars"></div>
+      </div>
+
+      <div class="hero-content reveal">
+        <div class="hero-emblem" aria-hidden="true">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="28" stroke="currentColor" stroke-width="1" opacity=".4"/>
+            <path d="M30 10v40M16 24l28 12M44 24L16 36" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="30" cy="30" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <p class="hero-kicker">Reflexión · Oración · Esperanza</p>
+        <h1 class="hero-titulo">
+          <span class="line-1">Palabra</span>
+          <span class="line-2">del Día</span>
+        </h1>
+        <p class="hero-sub">Una luz diaria para tu camino — versículos breves que consuelan, fortalecen y guían el corazón.</p>
 
         <div class="cta-row">
-          <button id="botonVersiculo" class="boton-cta">Recibir palabra</button>
+          <button id="botonVersiculo" class="boton-cta shimmer" data-testid="boton-versiculo">
+            <span><i class="fa-solid fa-feather-pointed"></i> Recibir palabra</span>
+          </button>
+          <a href="#santos" class="boton-ghost" data-testid="explorar-link">Explorar <i class="fa-solid fa-arrow-right-long"></i></a>
         </div>
 
-        <div id="versiculoAleatorio" class="card-versiculo">
-          <h3 class="placeholder">Pulsa "Obtener Palabra" para recibir una palabra de vida.</h3>
+        <div id="versiculoAleatorio" class="card-versiculo" data-testid="versiculo-card">
+          <div class="card-ornament top" aria-hidden="true"></div>
+          <i class="fa-solid fa-dove dove-icon" aria-hidden="true"></i>
+          <h3 class="placeholder">Pulsa <em>“Recibir palabra”</em> y deja que el Señor te hable hoy.</h3>
+          <div class="card-ornament bottom" aria-hidden="true"></div>
+        </div>
+
+        <div class="scroll-indicator" aria-hidden="true">
+          <span></span>
         </div>
       </div>
     </section>
+
+    <!-- DIVIDER -->
+    <div class="divider" aria-hidden="true">
+      <span class="dline"></span>
+      <span class="dornament"><i class="fa-solid fa-cross"></i></span>
+      <span class="dline"></span>
+    </div>
 
     <!-- SANTOS -->
-    <section id="santos" class="papas santos">
-      <h2>Santos de la Iglesia Católica</h2>
-      <div class="contenedor-imagenes-papa">
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/Pio.jpg" alt="San Pío" loading="lazy" data-id="pio">
-          <figcaption>San Pío</figcaption>
+    <section id="santos" class="gallery-section" data-testid="santos-section">
+      <div class="section-head reveal">
+        <p class="section-kicker">Comunión de los santos</p>
+        <h2>Santos de la Iglesia Católica</h2>
+        <p class="section-lead">Vidas entregadas a Dios que iluminan, con su ejemplo, el camino de cada creyente.</p>
+      </div>
+
+      <div class="card-grid grid-3" data-testid="santos-grid">
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/Pio.jpg" alt="San Pío" loading="lazy" data-id="pio" data-testid="santo-pio">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-cross"></i></span>
+          </div>
+          <figcaption>
+            <h3>San Pío</h3>
+            <p>de Pietrelcina</p>
+          </figcaption>
         </figure>
 
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/carlos.jpg" alt="San Carlos" loading="lazy" data-id="carlos">
-          <figcaption>San Carlos</figcaption>
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/carlos.jpg" alt="San Carlos" loading="lazy" data-id="carlos" data-testid="santo-carlos">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-cross"></i></span>
+          </div>
+          <figcaption>
+            <h3>San Carlos</h3>
+            <p>Borromeo</p>
+          </figcaption>
         </figure>
 
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/asis.jpg" alt="San Francisco de Asís" loading="lazy" data-id="asis">
-          <figcaption>San Francisco de Asís</figcaption>
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/asis.jpg" alt="San Francisco de Asís" loading="lazy" data-id="asis" data-testid="santo-asis">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-cross"></i></span>
+          </div>
+          <figcaption>
+            <h3>San Francisco</h3>
+            <p>de Asís</p>
+          </figcaption>
         </figure>
       </div>
     </section>
+
+    <!-- DIVIDER -->
+    <div class="divider" aria-hidden="true">
+      <span class="dline"></span>
+      <span class="dornament"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2l1.6 4.9H19l-4.2 3 1.6 4.9L12 11.9 7.6 14.8 9.2 9.9 5 6.9h5.4z" fill="currentColor"/></svg></span>
+      <span class="dline"></span>
+    </div>
 
     <!-- PAPAS -->
-    <section id="papas" class="papas">
-      <h2>Los últimos cinco Papas de la Iglesia</h2>
-      <div class="contenedor-imagenes-papa">
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy" data-id="jp1">
-          <figcaption>Juan Pablo I</figcaption>
+    <section id="papas" class="gallery-section alt" data-testid="papas-section">
+      <div class="section-head reveal">
+        <p class="section-kicker">Sucesores de Pedro</p>
+        <h2>Los últimos cinco Papas</h2>
+        <p class="section-lead">Pastores que han guiado a la Iglesia en tiempos recientes, dejando huella de fe, sabiduría y servicio.</p>
+      </div>
+
+      <div class="card-grid grid-5" data-testid="papas-grid">
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/JP1.jpg" alt="Juan Pablo I" loading="lazy" data-id="jp1" data-testid="papa-jp1">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-mitre-snowflake"></i><i class="fa-solid fa-crown" style="display:none"></i></span>
+          </div>
+          <figcaption><h3>Juan Pablo I</h3><p>1978</p></figcaption>
         </figure>
 
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/JP2.jpg" alt="San Juan Pablo II" loading="lazy" data-id="jp2">
-          <figcaption>San Juan Pablo II</figcaption>
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/JP2.jpg" alt="San Juan Pablo II" loading="lazy" data-id="jp2" data-testid="papa-jp2">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-crown"></i></span>
+          </div>
+          <figcaption><h3>San Juan Pablo II</h3><p>1978 – 2005</p></figcaption>
         </figure>
 
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/B16.jpg" alt="Benedicto XVI" loading="lazy" data-id="b16">
-          <figcaption>Benedicto XVI</figcaption>
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/B16.jpg" alt="Benedicto XVI" loading="lazy" data-id="b16" data-testid="papa-b16">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-crown"></i></span>
+          </div>
+          <figcaption><h3>Benedicto XVI</h3><p>2005 – 2013</p></figcaption>
         </figure>
 
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/francisco.jpg" alt="Francisco" loading="lazy" data-id="francisco">
-          <figcaption>Francisco</figcaption>
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/francisco.jpg" alt="Francisco" loading="lazy" data-id="francisco" data-testid="papa-francisco">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-crown"></i></span>
+          </div>
+          <figcaption><h3>Francisco</h3><p>2013 – 2025</p></figcaption>
         </figure>
 
-        <figure class="papa-figure">
-          <img class="pope-photo" src="images/leonvi.jpg" alt="León XIV" loading="lazy" data-id="leonvi">
-          <figcaption>León XIV</figcaption>
+        <figure class="figure-card reveal">
+          <div class="figure-media">
+            <img class="pope-photo" src="images/leonvi.jpg" alt="León XIV" loading="lazy" data-id="leonvi" data-testid="papa-leonvi">
+            <span class="figure-overlay"></span>
+            <span class="figure-badge"><i class="fa-solid fa-crown"></i></span>
+          </div>
+          <figcaption><h3>León XIV</h3><p>Pontífice</p></figcaption>
         </figure>
       </div>
     </section>
 
+    <!-- DIVIDER -->
+    <div class="divider" aria-hidden="true">
+      <span class="dline"></span>
+      <span class="dornament"><i class="fa-solid fa-dove"></i></span>
+      <span class="dline"></span>
+    </div>
+
     <!-- FE -->
-    <section id="fe" class="fe">
-      <h2>La Fe</h2>
-      <p>La fe es la confianza plena en Dios, en sus promesas y en su amor incondicional.</p>
+    <section id="fe" class="fe-section" data-testid="fe-section">
+      <div class="fe-inner reveal">
+        <p class="section-kicker center">Hebreos 11,1</p>
+        <h2>La Fe</h2>
+        <blockquote class="fe-quote">
+          <span class="quote-mark">“</span>
+          La fe es la confianza plena en Dios, en sus promesas y en su amor incondicional.
+          <span class="quote-mark closing">”</span>
+        </blockquote>
+        <div class="fe-pillars">
+          <div class="pillar"><i class="fa-solid fa-hands-praying"></i><span>Oración</span></div>
+          <div class="pillar"><i class="fa-solid fa-book-bible"></i><span>Palabra</span></div>
+          <div class="pillar"><i class="fa-solid fa-heart"></i><span>Caridad</span></div>
+        </div>
+      </div>
     </section>
 
     <!-- CONTACTO -->
-    <section id="contacto" class="contacto">
-      <h2>Contacto</h2>
-      <p>Si deseas colaborar, sugerir contenido o enviar un testimonio, escribe a: 
-        <a href="mailto:tombc07@gmail.com">tombc07@gmail.com</a></p>
+    <section id="contacto" class="contacto-section" data-testid="contacto-section">
+      <div class="contacto-inner reveal">
+        <p class="section-kicker center">Escríbenos</p>
+        <h2>Contacto</h2>
+        <p class="contacto-lead">
+          Si deseas colaborar, sugerir contenido o enviar un testimonio, escribe a:
+        </p>
+        <a href="mailto:tombc07@gmail.com" class="email-pill" data-testid="email-link">
+          <i class="fa-solid fa-envelope-open-text"></i>
+          tombc07@gmail.com
+        </a>
+        <div class="contact-icons">
+          <span class="ci"><i class="fa-solid fa-pen-nib"></i> Testimonios</span>
+          <span class="ci"><i class="fa-solid fa-hand-holding-heart"></i> Colaborar</span>
+          <span class="ci"><i class="fa-solid fa-lightbulb"></i> Sugerencias</span>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="creditos">
-    <p>Dios te ama</p>
-    <p>Desarrollado por un joven católico con ganas de evangelizar y predicar.</p>
+  <!-- FOOTER -->
+  <footer class="site-footer" data-testid="site-footer">
+    <div class="footer-bg" aria-hidden="true"></div>
+    <div class="footer-inner">
+      <div class="footer-verse reveal">
+        <i class="fa-solid fa-quote-left"></i>
+        <p>«Yo soy el camino, la verdad y la vida.»</p>
+        <small>— Juan 14,6</small>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <img src="images/vida-de-fe.png" alt="Vida de Fe"/>
+            <span>Vida de <em>Fe</em></span>
+          </div>
+          <p class="footer-tag">Reflexiones y versículos para acompañar tu camino diario.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Secciones</h4>
+          <a href="#palabra">Palabra del Día</a>
+          <a href="#santos">Santos</a>
+          <a href="#papas">Papas</a>
+          <a href="#fe">La Fe</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <a href="mailto:tombc07@gmail.com">tombc07@gmail.com</a>
+          <p class="footer-mini">Desarrollado por un joven católico con ganas de evangelizar y predicar.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="dios-te-ama" data-testid="dios-te-ama">
+          <i class="fa-solid fa-cross"></i> Dios te ama <i class="fa-solid fa-cross"></i>
+        </span>
+        <small>© <span id="year"></span> Vida de Fe · Hecho con fe y esperanza</small>
+      </div>
+    </div>
   </footer>
 
-  <!-- Popover inline: se renderiza dentro de cada figura al clicar -->
-
-  <!-- SCRIPT -->
+  <!-- SCRIPTS -->
   <script>
-  document.addEventListener('DOMContentLoaded', function(){
-    const toggle = document.querySelector('.nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if(toggle && nav){
-      toggle.addEventListener('click', function(){
-        const isOpen = nav.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-    }
-  });
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    document.addEventListener('DOMContentLoaded', function(){
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('main-nav');
+      const header = document.querySelector('.site-header');
+      if(toggle && nav){
+        toggle.addEventListener('click', function(){
+          const isOpen = nav.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          toggle.classList.toggle('is-open', isOpen);
+        });
+        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+          nav.classList.remove('open');
+          toggle.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }));
+      }
+      // header scroll state
+      const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 24);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Reveal-on-scroll
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if(e.isIntersecting){
+            e.target.classList.add('in-view');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    });
   </script>
+
   <script>
     const versiculos = [
       "Clama a mí, y yo te responderé. — Jeremías 33,3",
-     "Confía en el Señor y haz el bien. — Salmo 37,3",
-     "No se turbe vuestro corazón, ni tenga miedo. — Juan 14,27",
-     "Sean fuertes y valientes; no teman ni se asusten. — Josué 1,9",
-     "Yo soy el camino, la verdad y la vida. — Juan 14,6",
-     "La paz os dejo, mi paz os doy. — Juan 14,27",
-     "El justo por la fe vivirá. — Romanos 1,17",
-     "Alegraos en la esperanza, sed pacientes en la tribulación. — Romanos 12,12",
-     "Todo tiene su tiempo. — Eclesiastés 3,1",
-     "El amor nunca deja de ser. — 1 Corintios 13,8",
-     "El Señor peleará por vosotros. — Éxodo 14,14",
-     "No te desampararé ni te dejaré. — Hebreos 13,5",
-     "Yo estaré contigo todos los días, hasta el fin del mundo. — Mateo 28,20",
-     "Guarda silencio ante Jehová, y espera en él. — Salmo 37,7",
-     "Dame entendimiento para guardar tu ley. — Salmo 119,34",
-     "Esforzaos y cobrad ánimo. — Salmo 31,24",
-     "La lámpara del cuerpo es el ojo. — Mateo 6,22",
-     "Los que buscan al Señor no tendrán falta de ningún bien. — Salmo 34,10",
-     "Jehová es mi pastor; nada me faltará. — Salmo 23,1",
-     "Mi poder se perfecciona en la debilidad. — 2 Corintios 12,9",
-     "En Dios solamente está acallada mi alma. — Salmo 62,1",
-     "Bienaventurado el hombre que confía en Jehová. — Jeremías 17,7",
-     "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. — Salmo 91,1",
-     "Encomienda a Jehová tu camino, y confía en él. — Salmo 37,5",
-     "El que habita en el amor, habita en Dios. — 1 Juan 4,16",
-     "Dios no es hombre para que mienta. — Números 23,19",
-     "El que comenzó en vosotros la buena obra, la perfeccionará. — Filipenses 1,6",
-     "Mi ayuda viene de Jehová. — Salmo 121,2",
-     "El corazón alegre hermosea el rostro. — Proverbios 15,13",
-     "El que guarda su boca guarda su alma. — Proverbios 13,3"
-
+      "Confía en el Señor y haz el bien. — Salmo 37,3",
+      "No se turbe vuestro corazón, ni tenga miedo. — Juan 14,27",
+      "Sean fuertes y valientes; no teman ni se asusten. — Josué 1,9",
+      "Yo soy el camino, la verdad y la vida. — Juan 14,6",
+      "La paz os dejo, mi paz os doy. — Juan 14,27",
+      "El justo por la fe vivirá. — Romanos 1,17",
+      "Alegraos en la esperanza, sed pacientes en la tribulación. — Romanos 12,12",
+      "Todo tiene su tiempo. — Eclesiastés 3,1",
+      "El amor nunca deja de ser. — 1 Corintios 13,8",
+      "El Señor peleará por vosotros. — Éxodo 14,14",
+      "No te desampararé ni te dejaré. — Hebreos 13,5",
+      "Yo estaré contigo todos los días, hasta el fin del mundo. — Mateo 28,20",
+      "Guarda silencio ante Jehová, y espera en él. — Salmo 37,7",
+      "Dame entendimiento para guardar tu ley. — Salmo 119,34",
+      "Esforzaos y cobrad ánimo. — Salmo 31,24",
+      "La lámpara del cuerpo es el ojo. — Mateo 6,22",
+      "Los que buscan al Señor no tendrán falta de ningún bien. — Salmo 34,10",
+      "Jehová es mi pastor; nada me faltará. — Salmo 23,1",
+      "Mi poder se perfecciona en la debilidad. — 2 Corintios 12,9",
+      "En Dios solamente está acallada mi alma. — Salmo 62,1",
+      "Bienaventurado el hombre que confía en Jehová. — Jeremías 17,7",
+      "El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente. — Salmo 91,1",
+      "Encomienda a Jehová tu camino, y confía en él. — Salmo 37,5",
+      "El que habita en el amor, habita en Dios. — 1 Juan 4,16",
+      "Dios no es hombre para que mienta. — Números 23,19",
+      "El que comenzó en vosotros la buena obra, la perfeccionará. — Filipenses 1,6",
+      "Mi ayuda viene de Jehová. — Salmo 121,2",
+      "El corazón alegre hermosea el rostro. — Proverbios 15,13",
+      "El que guarda su boca guarda su alma. — Proverbios 13,3"
     ];
-
 
     const botonVersiculo = document.getElementById("botonVersiculo");
     const contenedorVersiculo = document.getElementById("versiculoAleatorio");
     botonVersiculo.addEventListener("click", () => {
       const aleatorio = Math.floor(Math.random() * versiculos.length);
-      contenedorVersiculo.innerHTML = `<h3 class="versiculo-texto">${versiculos[aleatorio]}</h3>`;
+      const [texto, ref] = versiculos[aleatorio].split('—').map(s => s.trim());
+      contenedorVersiculo.classList.remove('show');
+      // small delay to retrigger animation
+      void contenedorVersiculo.offsetWidth;
+      contenedorVersiculo.innerHTML = `
+        <div class="card-ornament top" aria-hidden="true"></div>
+        <i class="fa-solid fa-dove dove-icon" aria-hidden="true"></i>
+        <h3 class="versiculo-texto">"${texto}"</h3>
+        ${ref ? `<p class="versiculo-ref">— ${ref}</p>` : ''}
+        <div class="card-ornament bottom" aria-hidden="true"></div>
+      `;
       contenedorVersiculo.classList.add("show");
-      setTimeout(() => contenedorVersiculo.classList.remove("show"), 800);
     });
-
-    // Se eliminó la sección de "Salmo" y su lógica asociada.
   </script>
+
   <script>
   (function(){
     let bioData = {};
@@ -213,7 +400,7 @@
       document.addEventListener('click', function(e){
         const img = e.target.closest('.pope-photo');
         if(img){
-          const figure = img.closest('.papa-figure');
+          const figure = img.closest('.figure-card');
           const existing = figure.querySelector('.bio-popover');
           if(existing){ existing.remove(); return; }
           closeAllPopovers();
@@ -222,10 +409,10 @@
           const pop = document.createElement('div');
             pop.className = 'bio-popover';
             pop.innerHTML = `
-              <button class="bio-close" aria-label="Cerrar">×</button>
+              <button class="bio-close" aria-label="Cerrar" data-testid="bio-close">×</button>
               <h4 class="bio-title">${entry.name}</h4>
               <p class="bio-text">${entry.short}</p>
-              ${entry.full ? '<button class="boton-cta leer-mas">Leer más</button><div class="bio-full" style="display:none;">' + entry.full + '</div>' : ''}
+              ${entry.full ? '<button class="boton-cta leer-mas" data-testid="leer-mas">Leer más</button><div class="bio-full" style="display:none;">' + entry.full + '</div>' : ''}
             `;
           figure.appendChild(pop);
           pop.querySelector('.bio-close').addEventListener('click', () => pop.remove());
@@ -247,7 +434,6 @@
       document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAllPopovers(); });
     }
 
-    // Cargar biografías desde papas.json y santos.json, luego inicializar listeners
     Promise.all([
       fetch('papas.json').then(r => r.json()).catch(() => []),
       fetch('santos.json').then(r => r.json()).catch(() => [])
@@ -259,7 +445,6 @@
     }).finally(() => {
       initPopovers();
     });
-
   })();
   </script>
 </body>

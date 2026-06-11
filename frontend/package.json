@@ -1,0 +1,11 @@
+{
+  "name": "vida-de-fe-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "serve -l tcp://0.0.0.0:3000 ../ --no-clipboard --no-port-switching"
+  },
+  "dependencies": {
+    "serve": "14.2.4"
+  }
+}
