@@ -521,18 +521,70 @@ img { max-width: 100%; display: block; }
 .figure-card{
   position: relative;
   margin: 0;
-  background: var(--ivory);
+  background: transparent;
   border-radius: 18px;
-  padding: 14px 14px 18px;
+  padding: 0;
   text-align: center;
-  border: 1px solid rgba(201,168,76,0.18);
-  box-shadow: var(--shadow-sm);
-  transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+  perspective: 1200px;
+  min-height: 360px;
+  transition: transform .4s var(--ease);
+  cursor: pointer;
 }
 .figure-card:hover{
   transform: translateY(-6px);
+}
+.card-inner{
+  position: relative;
+  width: 100%;
+  min-height: 360px;
+  transition: transform .6s ease-in-out;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+.figure-card.flipped .card-inner{
+  transform: rotateY(180deg);
+}
+.card-front, .card-back{
+  border-radius: 18px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+.card-front{
+  position: relative;
+  background: var(--ivory);
+  padding: 14px 14px 18px;
+  border: 1px solid rgba(201,168,76,0.18);
+  box-shadow: var(--shadow-sm);
+  transition: border-color .4s var(--ease), box-shadow .4s var(--ease);
+  min-height: inherit;
+}
+.figure-card:hover .card-front{
   border-color: var(--gold-1);
   box-shadow: var(--shadow-gold);
+}
+.card-back{
+  position: absolute; inset: 0;
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(800px 400px at 50% -10%, rgba(201,168,76,0.18), transparent 60%),
+    linear-gradient(135deg, #1A2640 0%, #111a30 55%, #0a0f1a 100%);
+  border: 1px solid rgba(240,208,128,0.32);
+  box-shadow:
+    0 18px 40px rgba(10,15,26,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+  padding: 28px 22px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  color: var(--cream);
+}
+.card-back::before{
+  content:""; position: absolute; inset: 8px;
+  border: 1px solid rgba(240,208,128,0.18);
+  border-radius: 12px;
+  pointer-events: none;
 }
 .figure-media{
   position: relative;
@@ -545,7 +597,7 @@ img { max-width: 100%; display: block; }
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform .8s var(--ease), filter .4s var(--ease);
-  cursor: pointer;
+  pointer-events: none;
 }
 .figure-card:hover .figure-media img{
   transform: scale(1.06);
@@ -578,6 +630,24 @@ img { max-width: 100%; display: block; }
   background: var(--gold-1);
   color: #fff;
 }
+.flip-hint{
+  position: absolute; bottom: 12px; right: 12px;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: var(--gold-3);
+  background: rgba(255,253,248,0.88);
+  border: 1px solid var(--gold-line);
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgba(26,38,64,0.10);
+  transition: transform .35s var(--ease), background .35s var(--ease), color .35s var(--ease);
+  z-index: 2;
+}
+.figure-card:hover .flip-hint{
+  background: var(--gold-1);
+  color: #fff;
+  transform: rotate(90deg) scale(1.05);
+}
 .figure-card figcaption{
   margin-top: 16px;
 }
@@ -595,6 +665,76 @@ img { max-width: 100%; display: block; }
   font-style: italic;
   font-size: 14px;
   color: var(--gold-3);
+}
+
+/* ===== Card back face ===== */
+.card-back .back-symbol{
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(240,208,128,0.4);
+  color: var(--gold-2);
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+.card-back h3{
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 600;
+  color: var(--gold-2);
+  line-height: 1.2;
+  letter-spacing: .2px;
+}
+.card-back .back-meta{
+  margin: 6px 0 0;
+  font-family: var(--font-decor);
+  font-style: italic;
+  color: var(--cream);
+  opacity: .75;
+  font-size: 13.5px;
+  letter-spacing: .4px;
+}
+.card-back .back-divider{
+  display: block;
+  width: 70px; height: 1px;
+  margin: 16px auto;
+  background: linear-gradient(90deg, transparent, var(--gold-1), transparent);
+  position: relative;
+}
+.card-back .back-divider::after{
+  content:""; position: absolute; left: 50%; top: 50%;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold-1);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.18);
+}
+.card-back .back-verse{
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--cream);
+  font-size: clamp(13.5px, 1.1vw, 15.5px);
+  line-height: 1.5;
+  max-width: 90%;
+}
+.card-back .back-flip{
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(240,208,128,0.32);
+  background: rgba(240,208,128,0.06);
+  transition: background .3s var(--ease), color .3s var(--ease);
+}
+.figure-card:hover .card-back .back-flip{
+  background: rgba(240,208,128,0.14);
+  color: #fff;
 }
 
 /* ===========================================================
@@ -839,7 +979,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===========================================================
-   POPOVER de biografía
+   POPOVER de biografía (legacy, no usado tras flip-cards)
    =========================================================== */
 .figure-card{ position: relative; }
 .bio-popover{
