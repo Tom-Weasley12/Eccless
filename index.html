@@ -36,6 +36,7 @@
       <nav id="main-nav" class="main-nav" aria-label="Navegación principal" data-testid="main-nav">
         <a href="#palabra" data-testid="nav-palabra">Palabra</a>
         <a href="#santos" data-testid="nav-santos">Santos</a>
+        <a href="#testimonios" data-testid="nav-testimonios">Testimonios</a>
         <a href="#papas" data-testid="nav-papas">Papas</a>
         <a href="#fe" data-testid="nav-fe">Fe</a>
         <a href="#contacto" data-testid="nav-contacto">Contacto</a>
@@ -188,6 +189,89 @@
     <div class="divider" aria-hidden="true">
       <span class="dline"></span>
       <span class="dornament"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 2l1.6 4.9H19l-4.2 3 1.6 4.9L12 11.9 7.6 14.8 9.2 9.9 5 6.9h5.4z" fill="currentColor"/></svg></span>
+      <span class="dline"></span>
+    </div>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" class="testimonios-section" data-testid="testimonios-section">
+      <div class="section-head reveal">
+        <p class="section-kicker">Voces de fe</p>
+        <h2>Muro de Testimonios</h2>
+        <p class="section-lead">Historias reales de fe, conversión y esperanza compartidas por la comunidad. Tu palabra puede ser luz para otro corazón.</p>
+      </div>
+
+      <div class="testimonios-wrap reveal">
+        <!-- Form -->
+        <aside class="testimonio-form-card" data-testid="testimonio-form-card">
+          <div class="form-head">
+            <span class="form-icon"><i class="fa-solid fa-feather-pointed"></i></span>
+            <div>
+              <h3>Comparte tu testimonio</h3>
+              <p>Una luz pequeña puede encender muchas otras.</p>
+            </div>
+          </div>
+          <form id="testimonio-form" autocomplete="off" data-testid="testimonio-form">
+            <div class="field-row">
+              <label class="field">
+                <span>Nombre</span>
+                <input type="text" name="nombre" maxlength="60" required placeholder="María" data-testid="input-nombre"/>
+              </label>
+              <label class="field">
+                <span>Ciudad / País</span>
+                <input type="text" name="lugar" maxlength="80" required placeholder="Madrid, España" data-testid="input-lugar"/>
+              </label>
+            </div>
+            <label class="field">
+              <span>Categoría</span>
+              <div class="select-wrap">
+                <select name="categoria" required data-testid="input-categoria">
+                  <option value="Conversión">Conversión</option>
+                  <option value="Sanación">Sanación</option>
+                  <option value="Vocación">Vocación</option>
+                  <option value="Familia">Familia</option>
+                  <option value="Fe en tiempos difíciles">Fe en tiempos difíciles</option>
+                  <option value="Otro">Otro</option>
+                </select>
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </div>
+            </label>
+            <label class="field">
+              <span>Tu testimonio <small id="char-count">0 / 300</small></span>
+              <textarea name="texto" maxlength="300" required rows="4" placeholder="Comparte tu experiencia, lo que el Señor hizo en tu vida…" data-testid="input-texto"></textarea>
+            </label>
+            <button type="submit" class="boton-cta shimmer" data-testid="btn-publicar">
+              <span><i class="fa-solid fa-paper-plane"></i> Publicar testimonio</span>
+            </button>
+            <p id="form-status" class="form-status" data-testid="form-status"></p>
+          </form>
+        </aside>
+
+        <!-- Wall -->
+        <div class="testimonio-wall">
+          <div class="filtros" role="tablist" data-testid="filtros">
+            <button class="chip is-active" data-cat="all" data-testid="filtro-all">Todos</button>
+            <button class="chip" data-cat="Conversión" data-testid="filtro-conversion">Conversión</button>
+            <button class="chip" data-cat="Sanación" data-testid="filtro-sanacion">Sanación</button>
+            <button class="chip" data-cat="Vocación" data-testid="filtro-vocacion">Vocación</button>
+            <button class="chip" data-cat="Familia" data-testid="filtro-familia">Familia</button>
+            <button class="chip" data-cat="Fe en tiempos difíciles" data-testid="filtro-fe">Fe en tiempos difíciles</button>
+            <button class="chip" data-cat="Otro" data-testid="filtro-otro">Otro</button>
+          </div>
+
+          <div id="testimonios-list" class="testimonios-list" data-testid="testimonios-list">
+            <div class="empty-state" id="empty-state" data-testid="empty-state">
+              <i class="fa-solid fa-quote-left"></i>
+              <p>Aún no hay testimonios. Sé el primero en compartir tu luz.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider" aria-hidden="true">
+      <span class="dline"></span>
+      <span class="dornament"><i class="fa-solid fa-cross"></i></span>
       <span class="dline"></span>
     </div>
 
@@ -509,6 +593,249 @@
         document.querySelectorAll('.figure-card.flipped').forEach(c => c.classList.remove('flipped'));
       }
     });
+  })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+  /* =========================================================
+     MURO DE TESTIMONIOS — Supabase + fallback localStorage
+     =========================================================
+     1) Crea un proyecto en https://supabase.com
+     2) SQL editor → ejecuta:
+
+        create table testimonios (
+          id          bigint generated by default as identity primary key,
+          nombre      text not null,
+          lugar       text not null,
+          categoria   text not null,
+          texto       text not null,
+          likes       int  not null default 0,
+          created_at  timestamptz default now()
+        );
+
+        alter table testimonios enable row level security;
+
+        create policy "Lectura pública"
+          on testimonios for select using (true);
+
+        create policy "Inserción pública"
+          on testimonios for insert with check (
+            length(texto) <= 300 and length(nombre) <= 60
+          );
+
+        create policy "Like update"
+          on testimonios for update using (true) with check (true);
+
+     3) Project Settings → API → copia URL y anon key abajo:
+     ========================================================= */
+  const SUPABASE_URL      = "https://YOUR-PROJECT.supabase.co";
+  const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+
+  (function(){
+    const CATEGORIAS = ["Conversión","Sanación","Vocación","Familia","Fe en tiempos difíciles","Otro"];
+    const isConfigured = !SUPABASE_URL.includes("YOUR-PROJECT") && !SUPABASE_ANON_KEY.includes("YOUR-ANON");
+    const sb = isConfigured && window.supabase
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+
+    const LS_KEY      = "vidadefe_testimonios";
+    const LS_LIKED    = "vidadefe_likes";
+    const listEl      = document.getElementById("testimonios-list");
+    const emptyEl     = document.getElementById("empty-state");
+    const formEl      = document.getElementById("testimonio-form");
+    const statusEl    = document.getElementById("form-status");
+    const charCountEl = document.getElementById("char-count");
+    const chips       = document.querySelectorAll(".filtros .chip");
+
+    let store = [];
+    let currentFilter = "all";
+    const likedSet = new Set(JSON.parse(localStorage.getItem(LS_LIKED) || "[]"));
+
+    // ----- Demo seed (cuando Supabase no está configurado) -----
+    const demoSeed = [
+      { id:"d1", nombre:"María",   lugar:"Madrid, España",      categoria:"Conversión",            texto:"Después de años alejada, una misa en Roma me devolvió la fe. Sentí a Cristo presente como nunca.",                        likes:12, created_at: Date.now()-1000*60*60*5 },
+      { id:"d2", nombre:"Carlos",  lugar:"Buenos Aires, AR",    categoria:"Sanación",              texto:"Tras la enfermedad de mi madre, oramos el rosario en familia cada noche. Hoy ella está sana y unidos en la fe.",                likes:34, created_at: Date.now()-1000*60*60*30 },
+      { id:"d3", nombre:"Lucía",   lugar:"Bogotá, Colombia",    categoria:"Vocación",              texto:"En adoración eucarística entendí que el Señor me llamaba a la vida consagrada. La paz que sentí no la cambio por nada.",      likes:21, created_at: Date.now()-1000*60*60*72 },
+      { id:"d4", nombre:"Andrés",  lugar:"Lima, Perú",          categoria:"Familia",               texto:"Mi matrimonio estaba al borde de la ruptura. Confiamos en San José y hoy somos un hogar restaurado.",                          likes:18, created_at: Date.now()-1000*60*60*120 },
+      { id:"d5", nombre:"Sofía",   lugar:"Sevilla, España",     categoria:"Fe en tiempos difíciles", texto:"Perdí mi trabajo en plena crisis. Cada mañana leía un salmo y el Señor abrió puertas que yo no veía.",                     likes:9,  created_at: Date.now()-1000*60*60*200 }
+    ];
+
+    function loadLocal(){
+      const raw = localStorage.getItem(LS_KEY);
+      if(raw){ try { return JSON.parse(raw); } catch(e){} }
+      localStorage.setItem(LS_KEY, JSON.stringify(demoSeed));
+      return [...demoSeed];
+    }
+    function saveLocal(){ localStorage.setItem(LS_KEY, JSON.stringify(store)); }
+
+    function colorCategoria(cat){
+      switch(cat){
+        case "Conversión":              return "cat-conversion";
+        case "Sanación":                return "cat-sanacion";
+        case "Vocación":                return "cat-vocacion";
+        case "Familia":                 return "cat-familia";
+        case "Fe en tiempos difíciles": return "cat-fe";
+        default:                        return "cat-otro";
+      }
+    }
+    function iniciales(nombre){
+      return (nombre || "?").trim().split(/\s+/).slice(0,2).map(p => p[0]||"").join("").toUpperCase() || "?";
+    }
+    function timeAgo(date){
+      const d  = typeof date === "string" ? new Date(date).getTime() : date;
+      const s  = Math.floor((Date.now() - d)/1000);
+      if(s < 60)        return "ahora";
+      if(s < 3600)      return Math.floor(s/60) + " min";
+      if(s < 86400)     return Math.floor(s/3600) + " h";
+      if(s < 86400*30)  return Math.floor(s/86400) + " d";
+      return new Date(d).toLocaleDateString("es-ES",{year:"numeric",month:"short",day:"numeric"});
+    }
+    function escape(s){ return String(s||"").replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m])); }
+
+    function render(){
+      const filtered = currentFilter === "all"
+        ? store
+        : store.filter(t => t.categoria === currentFilter);
+
+      if(!filtered.length){
+        emptyEl.style.display = "block";
+        listEl.querySelectorAll(".testimonio-card").forEach(c => c.remove());
+        emptyEl.querySelector("p").textContent = (currentFilter === "all")
+          ? "Aún no hay testimonios. Sé el primero en compartir tu luz."
+          : "Aún no hay testimonios en esta categoría.";
+        return;
+      }
+      emptyEl.style.display = "none";
+
+      listEl.innerHTML = filtered.map(t => {
+        const liked = likedSet.has(String(t.id));
+        return `
+          <article class="testimonio-card ${colorCategoria(t.categoria)}" data-id="${escape(t.id)}" data-testid="testimonio-${escape(t.id)}">
+            <div class="t-head">
+              <span class="t-avatar" aria-hidden="true">${iniciales(t.nombre)}</span>
+              <div class="t-who">
+                <h4>${escape(t.nombre)}</h4>
+                <p><i class="fa-solid fa-location-dot"></i> ${escape(t.lugar)} · <span class="t-time">${timeAgo(t.created_at)}</span></p>
+              </div>
+              <span class="t-cat ${colorCategoria(t.categoria)}">${escape(t.categoria)}</span>
+            </div>
+            <p class="t-text">${escape(t.texto)}</p>
+            <div class="t-foot">
+              <button class="t-like ${liked ? 'is-liked' : ''}" data-testid="like-${escape(t.id)}" aria-pressed="${liked}">
+                <i class="fa-solid fa-hands-praying"></i>
+                <span class="like-label">Me dio fuerza</span>
+                <span class="like-count">${t.likes || 0}</span>
+              </button>
+            </div>
+          </article>`;
+      }).join("");
+    }
+
+    // ---------- Data layer ----------
+    async function fetchAll(){
+      if(sb){
+        const { data, error } = await sb.from("testimonios")
+          .select("*").order("created_at", { ascending:false });
+        if(error){ console.warn("[Supabase] fetch error:", error.message); return []; }
+        return data || [];
+      }
+      return loadLocal().sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+    async function insertOne(payload){
+      if(sb){
+        const { data, error } = await sb.from("testimonios").insert([payload]).select().single();
+        if(error) throw new Error(error.message);
+        return data;
+      }
+      return { ...payload, id: "l" + Date.now(), created_at: new Date().toISOString(), likes: 0 };
+    }
+    async function bumpLike(t){
+      const newLikes = (t.likes || 0) + 1;
+      if(sb){
+        const { error } = await sb.from("testimonios").update({ likes: newLikes }).eq("id", t.id);
+        if(error) throw new Error(error.message);
+      }
+      t.likes = newLikes;
+      if(!sb){ saveLocal(); }
+    }
+
+    // ---------- Form ----------
+    const textarea = formEl.querySelector('textarea[name="texto"]');
+    textarea.addEventListener("input", () => {
+      charCountEl.textContent = `${textarea.value.length} / 300`;
+    });
+
+    formEl.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "";
+      statusEl.className = "form-status";
+      const fd = new FormData(formEl);
+      const payload = {
+        nombre:    (fd.get("nombre")||"").trim(),
+        lugar:     (fd.get("lugar")||"").trim(),
+        categoria: (fd.get("categoria")||"").trim(),
+        texto:     (fd.get("texto")||"").trim()
+      };
+      if(!payload.nombre || !payload.lugar || !payload.texto){
+        statusEl.textContent = "Por favor completa todos los campos.";
+        statusEl.classList.add("err"); return;
+      }
+      if(!CATEGORIAS.includes(payload.categoria)){
+        statusEl.textContent = "Categoría no válida."; statusEl.classList.add("err"); return;
+      }
+      const btn = formEl.querySelector("button[type='submit']");
+      btn.disabled = true; btn.classList.add("is-loading");
+      try {
+        const item = await insertOne(payload);
+        store.unshift(item);
+        if(!sb) saveLocal();
+        render();
+        formEl.reset();
+        charCountEl.textContent = "0 / 300";
+        statusEl.textContent = sb
+          ? "¡Gracias! Tu testimonio ha sido publicado."
+          : "Publicado en modo demo (configura Supabase para hacerlo público).";
+        statusEl.classList.add("ok");
+        setTimeout(() => { statusEl.textContent = ""; statusEl.className = "form-status"; }, 5000);
+      } catch(err){
+        statusEl.textContent = "No se pudo publicar: " + err.message;
+        statusEl.classList.add("err");
+      } finally {
+        btn.disabled = false; btn.classList.remove("is-loading");
+      }
+    });
+
+    // ---------- Likes ----------
+    listEl.addEventListener("click", async (e) => {
+      const btn = e.target.closest(".t-like");
+      if(!btn) return;
+      const card = btn.closest(".testimonio-card");
+      const id = card.dataset.id;
+      if(likedSet.has(id)) return;
+      const t = store.find(x => String(x.id) === String(id));
+      if(!t) return;
+      btn.classList.add("is-liked","just-liked");
+      btn.querySelector(".like-count").textContent = (t.likes||0) + 1;
+      likedSet.add(id);
+      localStorage.setItem(LS_LIKED, JSON.stringify([...likedSet]));
+      try { await bumpLike(t); } catch(err){ console.warn("like error:", err.message); }
+      setTimeout(() => btn.classList.remove("just-liked"), 600);
+    });
+
+    // ---------- Filtros ----------
+    chips.forEach(chip => chip.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("is-active"));
+      chip.classList.add("is-active");
+      currentFilter = chip.dataset.cat;
+      render();
+    }));
+
+    // ---------- Init ----------
+    (async () => {
+      store = await fetchAll();
+      render();
+    })();
   })();
   </script>
 </body>
